@@ -7,10 +7,10 @@ GO
 
 CREATE TABLE [dbo].[users] (
     [user_id]       INT            IDENTITY (1, 1) NOT NULL,
-    [password]      NVARCHAR (255) NOT NULL,
+    [password_hash]      NVARCHAR (255) NOT NULL,
     [email]         NVARCHAR (100) NOT NULL,
     [role]          NVARCHAR (20)  NOT NULL,
-    [created_at]    DATETIME       DEFAULT (getdate()) NULL,
+    [created_at]    DATETIME2(3) DEFAULT SYSDATETIME() NOT NULL,
     [avatar]        NVARCHAR (MAX) NULL,
     [updated_at]    DATETIME       NULL,
     PRIMARY KEY CLUSTERED ([user_id] ASC),
@@ -18,56 +18,57 @@ CREATE TABLE [dbo].[users] (
     UNIQUE NONCLUSTERED ([email] ASC)
 );
 
-insert into users ( [password] , [email] , [role] , [created_at] , [avatar] , [updated_at] ) 
-values ( /* password */ N'12345' ,/* email */ N'manager@gmail.com' ,/* role */ N'MANAGER' ,/* created_at */ '2025-05-27 17:19:59.727' ,/* avatar */ null ,/* updated_at */ null  ), 
-( /* password */ N'12345' ,/* email */ N'user@gmail.com' ,/* role */ N'PATIENT' ,/* created_at */ '2025-05-27 17:22:05.533' ,/* avatar */ null ,/* updated_at */ null  ), 
-( /* password */ N'12345' ,/* email */ N'staff@gmail.com' ,/* role */ N'STAFF' ,/* created_at */ '2025-05-27 17:22:37.053' ,/* avatar */ null ,/* updated_at */ null  ), 
-( /* password */ N'12345' ,/* email */ N'doctor@gmail.com' ,/* role */ N'DOCTOR' ,/* created_at */ '2025-05-27 17:23:29.700' ,/* avatar */ null ,/* updated_at */ null  ), 
-( /* password */ N'12345' ,/* email */ N'hashed_password_123' ,/* role */ N'PATIENT' ,/* created_at */ '2025-05-27 17:25:44.323' ,/* avatar */ null ,/* updated_at */ null  ), 
-( /* password */ N'12345' ,/* email */ N'userr@gmail.com' ,/* role */ N'PATIENT' ,/* created_at */ '2025-05-28 12:37:52.760' ,/* avatar */ null ,/* updated_at */ null  ), 
-( /* password */ N'12345' ,/* email */ N'phuocthde180577@fpt.edu.vn' ,/* role */ N'PATIENT' ,/* created_at */ '2025-05-28 19:21:52.967' ,/* avatar */ null ,/* updated_at */ '2025-06-18 06:32:22.337'  ), 
-( /* password */ N'12345' ,/* email */ N'doctor1@gmail.com' ,/* role */ N'DOCTOR' ,/* created_at */ '2025-06-02 06:22:04.120' ,/* avatar */ null ,/* updated_at */ null  ), 
-( /* password */ N'123456' ,/* email */ N'dentist1@nhakhoa.vn' ,/* role */ N'DOCTOR' ,/* created_at */ '2025-06-10 17:09:53.240' ,/* avatar */ null ,/* updated_at */ null  ), 
-( /* password */ N'123456' ,/* email */ N'dentist2@nhakhoa.vn' ,/* role */ N'DOCTOR' ,/* created_at */ '2025-06-10 17:09:53.240' ,/* avatar */ null ,/* updated_at */ null  ), 
-( /* password */ N'123456' ,/* email */ N'dentist3@nhakhoa.vn' ,/* role */ N'DOCTOR' ,/* created_at */ '2025-06-10 17:09:53.240' ,/* avatar */ null ,/* updated_at */ null  ), 
-( /* password */ N'123456' ,/* email */ N'patient1@email.vn' ,/* role */ N'PATIENT' ,/* created_at */ '2025-06-10 17:09:53.240' ,/* avatar */ null ,/* updated_at */ null  ), 
-( /* password */ N'123456' ,/* email */ N'patient2@email.vn' ,/* role */ N'PATIENT' ,/* created_at */ '2025-06-10 17:09:53.240' ,/* avatar */ null ,/* updated_at */ null  ), 
-( /* password */ N'12345' ,/* email */ N'king123456789@gmail.com' ,/* role */ N'PATIENT' ,/* created_at */ '2025-06-17 09:59:08.440' ,/* avatar */ null ,/* updated_at */ null  ), 
-( /* password */ N'12345' ,/* email */ N'doctor2@gmail.com' ,/* role */ N'DOCTOR' ,/* created_at */ '2025-06-21 08:31:36.550' ,/* avatar */ null ,/* updated_at */ null  ), 
-( /* password */ N'12345' ,/* email */ N'doctor3@gmail.com' ,/* role */ N'DOCTOR' ,/* created_at */ '2025-06-21 08:32:09.873' ,/* avatar */ null ,/* updated_at */ null  ), 
-( /* password */ N'12345' ,/* email */ N'doctor4@gmail.com' ,/* role */ N'DOCTOR' ,/* created_at */ '2025-06-21 08:32:48.903' ,/* avatar */ null ,/* updated_at */ null  ), 
-( /* password */ N'12345' ,/* email */ N'user6@gmail.com' ,/* role */ N'PATIENT' ,/* created_at */ '2025-06-23 14:37:47.390' ,/* avatar */ null ,/* updated_at */ null  ), 
-( /* password */ N'12345' ,/* email */ N'user20@gmail.com' ,/* role */ N'PATIENT' ,/* created_at */ '2025-06-23 14:57:29.630' ,/* avatar */ null ,/* updated_at */ null  ), 
-( /* password */ N'12345' ,/* email */ N'de180577tranhongphuoc@gmail.com' ,/* role */ N'PATIENT' ,/* created_at */ '2025-06-27 14:18:55.360' ,/* avatar */ null ,/* updated_at */ null  );
-
+insert into users ( [password_hash] , [email] , [role] , [created_at] , [avatar] , [updated_at] ) 
+values ( /* password_hash */ N'12345' ,/* email */ N'manager@gmail.com' ,/* role */ N'MANAGER' ,/* created_at */ '2025-05-27 17:19:59.727' ,/* avatar */ null ,/* updated_at */ null  ), 
+( /* password_hash */ N'12345' ,/* email */ N'staff1@gmail.com' ,/* role */ N'STAFF' ,/* created_at */ '2025-05-27 17:22:05.533' ,/* avatar */ null ,/* updated_at */ null  ), 
+( /* password_hash */ N'12345' ,/* email */ N'staff2@gmail.com' ,/* role */ N'STAFF' ,/* created_at */ '2025-05-27 17:22:37.053' ,/* avatar */ null ,/* updated_at */ null  ), 
+( /* password_hash */ N'12345' ,/* email */ N'doctor@gmail.com' ,/* role */ N'DOCTOR' ,/* created_at */ '2025-05-27 17:23:29.700' ,/* avatar */ null ,/* updated_at */ null  ), 
+( /* password_hash */ N'12345' ,/* email */ N'hashed_password_123' ,/* role */ N'PATIENT' ,/* created_at */ '2025-05-27 17:25:44.323' ,/* avatar */ null ,/* updated_at */ null  ), 
+( /* password_hash */ N'12345' ,/* email */ N'userr@gmail.com' ,/* role */ N'PATIENT' ,/* created_at */ '2025-05-28 12:37:52.760' ,/* avatar */ null ,/* updated_at */ null  ), 
+( /* password_hash */ N'12345' ,/* email */ N'phuocthde180577@fpt.edu.vn' ,/* role */ N'PATIENT' ,/* created_at */ '2025-05-28 19:21:52.967' ,/* avatar */ null ,/* updated_at */ '2025-06-18 06:32:22.337'  ), 
+( /* password_hash */ N'12345' ,/* email */ N'doctor1@gmail.com' ,/* role */ N'DOCTOR' ,/* created_at */ '2025-06-02 06:22:04.120' ,/* avatar */ null ,/* updated_at */ null  ), 
+( /* password_hash */ N'123456' ,/* email */ N'dentist1@nhakhoa.vn' ,/* role */ N'DOCTOR' ,/* created_at */ '2025-06-10 17:09:53.240' ,/* avatar */ null ,/* updated_at */ null  ), 
+( /* password_hash */ N'123456' ,/* email */ N'dentist2@nhakhoa.vn' ,/* role */ N'DOCTOR' ,/* created_at */ '2025-06-10 17:09:53.240' ,/* avatar */ null ,/* updated_at */ null  ), 
+( /* password_hash */ N'123456' ,/* email */ N'dentist3@nhakhoa.vn' ,/* role */ N'DOCTOR' ,/* created_at */ '2025-06-10 17:09:53.240' ,/* avatar */ null ,/* updated_at */ null  ), 
+( /* password_hash */ N'123456' ,/* email */ N'patient1@email.vn' ,/* role */ N'PATIENT' ,/* created_at */ '2025-06-10 17:09:53.240' ,/* avatar */ null ,/* updated_at */ null  ), 
+( /* password_hash */ N'123456' ,/* email */ N'patient2@email.vn' ,/* role */ N'PATIENT' ,/* created_at */ '2025-06-10 17:09:53.240' ,/* avatar */ null ,/* updated_at */ null  ), 
+( /* password_hash */ N'12345' ,/* email */ N'king123456789@gmail.com' ,/* role */ N'PATIENT' ,/* created_at */ '2025-06-17 09:59:08.440' ,/* avatar */ null ,/* updated_at */ null  ), 
+( /* password_hash */ N'12345' ,/* email */ N'doctor2@gmail.com' ,/* role */ N'DOCTOR' ,/* created_at */ '2025-06-21 08:31:36.550' ,/* avatar */ null ,/* updated_at */ null  ), 
+( /* password_hash */ N'12345' ,/* email */ N'doctor3@gmail.com' ,/* role */ N'DOCTOR' ,/* created_at */ '2025-06-21 08:32:09.873' ,/* avatar */ null ,/* updated_at */ null  ), 
+( /* password_hash */ N'12345' ,/* email */ N'doctor4@gmail.com' ,/* role */ N'DOCTOR' ,/* created_at */ '2025-06-21 08:32:48.903' ,/* avatar */ null ,/* updated_at */ null  ), 
+( /* password_hash */ N'12345' ,/* email */ N'user6@gmail.com' ,/* role */ N'PATIENT' ,/* created_at */ '2025-06-23 14:37:47.390' ,/* avatar */ null ,/* updated_at */ null  ), 
+( /* password_hash */ N'12345' ,/* email */ N'user20@gmail.com' ,/* role */ N'PATIENT' ,/* created_at */ '2025-06-23 14:57:29.630' ,/* avatar */ null ,/* updated_at */ null  ), 
+( /* password_hash */ N'12345' ,/* email */ N'de180577tranhongphuoc@gmail.com' ,/* role */ N'PATIENT' ,/* created_at */ '2025-06-27 14:18:55.360' ,/* avatar */ null ,/* updated_at */ null  ),
+( /* password_hash */ N'12345' ,/* email */ N'doctor5@gmail.com' ,/* role */ N'DOCTOR' ,/* created_at */ '2025-06-21 08:32:48.903' ,/* avatar */ null ,/* updated_at */ null  );
 
 CREATE TABLE [dbo].[Patients] (
     [patient_id]    INT            IDENTITY (1, 1) NOT NULL,
-    [user_id]       INT            NULL,
+    [user_id]       INT            NOT NULL,
     [full_name]     NVARCHAR (255) NOT NULL,
     [phone]         NVARCHAR (20)  NULL,
     [date_of_birth] DATE           NULL,
     [gender]        NVARCHAR (10)  NULL,
-    [created_at]    DATETIME       DEFAULT (getdate()) NULL,
+    [created_at]    DATETIME2(3) DEFAULT SYSDATETIME() NOT NULL,
     [avatar]        NVARCHAR (MAX) NULL,
+    CONSTRAINT FK_Patients_User FOREIGN KEY (user_id) REFERENCES dbo.users(user_id),
+    CONSTRAINT UQ_Patients_User UNIQUE (user_id),
     PRIMARY KEY CLUSTERED ([patient_id] ASC),
     CHECK ([gender]='other' OR [gender]='female' OR [gender]='male'),
-    UNIQUE NONCLUSTERED ([user_id] ASC)
 );
 
 insert into patients ( [user_id] , [full_name] , [phone] , [date_of_birth] , [gender] , [created_at] , [avatar] ) 
-values ( /* user_id */ 2 ,/* full_name */ N'THP' ,/* phone */ N'0358014258' ,/* date_of_birth */ '2024-05-24' ,/* gender */ N'male' ,/* created_at */ '2025-05-26 11:15:35.770' ,/* avatar */ null  ), 
-( /* user_id */ 49 ,/* full_name */ N'Tran Hong Phuoc' ,/* phone */ N'0936929381' ,/* date_of_birth */ '2025-05-02' ,/* gender */ N'male' ,/* created_at */ '2025-05-26 11:40:27.040' ,/* avatar */ null  ), 
-( /* user_id */ 6 ,/* full_name */ N'Tran Hong Phuoc' ,/* phone */ N'0936929381' ,/* date_of_birth */ '2025-05-28' ,/* gender */ N'male' ,/* created_at */ '2025-05-28 12:38:03.547' ,/* avatar */ null  ), 
-( /* user_id */ 7 ,/* full_name */ N'PhuocTHDev' ,/* phone */ N'0936929381' ,/* date_of_birth */ '2025-05-29' ,/* gender */ N'male' ,/* created_at */ '2025-05-28 19:22:00.753' ,/* avatar */ null  ), 
-( /* user_id */ 4 ,/* full_name */ N'Nguyễn Thị Mai' ,/* phone */ N'0934567890' ,/* date_of_birth */ '1990-03-25' ,/* gender */ N'female' ,/* created_at */ '2025-06-10 17:09:53.250' ,/* avatar */ null  ), 
-( /* user_id */ 5 ,/* full_name */ N'Phạm Văn Hùng' ,/* phone */ N'0945678901' ,/* date_of_birth */ '1988-07-08' ,/* gender */ N'male' ,/* created_at */ '2025-06-10 17:09:53.250' ,/* avatar */ null  ), 
-( /* user_id */ 2011 ,/* full_name */ N'king' ,/* phone */ N'0936929381' ,/* date_of_birth */ '2025-06-23' ,/* gender */ N'male' ,/* created_at */ '2025-06-23 14:57:43.747' ,/* avatar */ null  ), 
-( /* user_id */ 2012 ,/* full_name */ N'Trương Gia Bình ' ,/* phone */ N'0936929382' ,/* date_of_birth */ '2004-06-05' ,/* gender */ N'male' ,/* created_at */ '2025-06-27 14:19:27.610' ,/* avatar */ null  );
+values ( /* user_id */ 5 ,/* full_name */ N'THP' ,/* phone */ N'0358014258' ,/* date_of_birth */ '2024-05-24' ,/* gender */ N'male' ,/* created_at */ '2025-05-26 11:15:35.770' ,/* avatar */ null  ), 
+( /* user_id */ 6 ,/* full_name */ N'Tran Hong Phuoc' ,/* phone */ N'0936929381' ,/* date_of_birth */ '2025-05-02' ,/* gender */ N'male' ,/* created_at */ '2025-05-26 11:40:27.040' ,/* avatar */ null  ), 
+( /* user_id */ 7 ,/* full_name */ N'Tran Hong Phuoc' ,/* phone */ N'0936929381' ,/* date_of_birth */ '2025-05-28' ,/* gender */ N'male' ,/* created_at */ '2025-05-28 12:38:03.547' ,/* avatar */ null  ), 
+( /* user_id */ 12 ,/* full_name */ N'PhuocTHDev' ,/* phone */ N'0936929381' ,/* date_of_birth */ '2025-05-29' ,/* gender */ N'male' ,/* created_at */ '2025-05-28 19:22:00.753' ,/* avatar */ null  ), 
+( /* user_id */ 13 ,/* full_name */ N'Nguyễn Thị Mai' ,/* phone */ N'0934567890' ,/* date_of_birth */ '1990-03-25' ,/* gender */ N'female' ,/* created_at */ '2025-06-10 17:09:53.250' ,/* avatar */ null  ), 
+( /* user_id */ 14 ,/* full_name */ N'Phạm Văn Hùng' ,/* phone */ N'0945678901' ,/* date_of_birth */ '1988-07-08' ,/* gender */ N'male' ,/* created_at */ '2025-06-10 17:09:53.250' ,/* avatar */ null  ), 
+( /* user_id */ 18 ,/* full_name */ N'king' ,/* phone */ N'0936929381' ,/* date_of_birth */ '2025-06-23' ,/* gender */ N'male' ,/* created_at */ '2025-06-23 14:57:43.747' ,/* avatar */ null  ), 
+( /* user_id */ 19 ,/* full_name */ N'Trương Gia Bình ' ,/* phone */ N'0936929382' ,/* date_of_birth */ '2004-06-05' ,/* gender */ N'male' ,/* created_at */ '2025-06-27 14:19:27.610' ,/* avatar */ null  );
 
 CREATE TABLE [dbo].[Doctors] (
-    [doctor_id]      BIGINT         IDENTITY (1, 1) NOT NULL,
-    [user_id]        BIGINT         NOT NULL,
+    [doctor_id]      INT         IDENTITY (1, 1) NOT NULL,
+    [user_id]        INT            NOT NULL,
     [full_name]      NVARCHAR (255) NOT NULL,
     [phone]          NVARCHAR (20)  NOT NULL,
     [address]        NVARCHAR (MAX) NULL,
@@ -75,20 +76,22 @@ CREATE TABLE [dbo].[Doctors] (
     [gender]         NVARCHAR (10)  NULL,
     [specialty]      NVARCHAR (255) NOT NULL,
     [license_number] NVARCHAR (50)  NOT NULL,
-    [created_at]     DATETIME       DEFAULT (getdate()) NULL,
+    [created_at]     DATETIME2(3) DEFAULT SYSDATETIME() NULL,
     [status]         NVARCHAR (50)  DEFAULT (N'active') NOT NULL,
     [avatar]         NVARCHAR (MAX) NULL,
     PRIMARY KEY CLUSTERED ([doctor_id] ASC),
     CHECK ([gender]=N'other' OR [gender]=N'female' OR [gender]=N'male'),
     UNIQUE NONCLUSTERED ([license_number] ASC),
-    UNIQUE NONCLUSTERED ([user_id] ASC)
+    UNIQUE NONCLUSTERED ([user_id] ASC),
+    CONSTRAINT CHK_Doctors_Status CHECK ([status] IN ('active','inactive','suspended')),
+    CONSTRAINT FK_Doctors_User FOREIGN KEY ([user_id]) REFERENCES [dbo].[users] ([user_id])
 );
 
 insert into doctors ( [user_id] , [full_name] , [phone] , [address] , [date_of_birth] , [gender] , [specialty] , [license_number] , [created_at] , [status] , [avatar] ) 
-values ( /* user_id */ 68 ,/* full_name */ N'Nguyen Do Phuc Toan' ,/* phone */ N'0123456789' ,/* address */ N'123 Đường ABC, Quận 1, TP.HCM' ,/* date_of_birth */ '1985-06-15' ,/* gender */ N'male' ,/* specialty */ N'Chuyên khoa răng miệng ' ,/* license_number */ N'BACSITOAN001' ,/* created_at */ '2025-05-24 03:25:49.890' ,/* status */ N'active' ,/* avatar */ null  ), 
-( /* user_id */ 2007 ,/* full_name */ N'BS. Nguyễn Văn An' ,/* phone */ N'0901234567' ,/* address */ N'123 Đường Nguyễn Trãi, Q1, HCM' ,/* date_of_birth */ '1980-01-15' ,/* gender */ N'male' ,/* specialty */ N'Nha khoa tổng quát' ,/* license_number */ N'NK001' ,/* created_at */ '2025-06-10 17:09:53.247' ,/* status */ N'active' ,/* avatar */ null  ), 
-( /* user_id */ 2008 ,/* full_name */ N'BS. Trần Thị Bích' ,/* phone */ N'0912345678' ,/* address */ N'456 Đường Lê Văn Sỹ, Q3, HCM' ,/* date_of_birth */ '1985-05-20' ,/* gender */ N'female' ,/* specialty */ N'Chỉnh nha - Niềng răng' ,/* license_number */ N'NK002' ,/* created_at */ '2025-06-10 17:09:53.247' ,/* status */ N'active' ,/* avatar */ null  ), 
-( /* user_id */ 2009 ,/* full_name */ N'BS. Lê Minh Cường' ,/* phone */ N'0923456789' ,/* address */ N'789 Đường Võ Văn Tần, Q3, HCM' ,/* date_of_birth */ '1978-12-10' ,/* gender */ N'male' ,/* specialty */ N'Phẫu thuật hàm mặt' ,/* license_number */ N'NK003' ,/* created_at */ '2025-06-10 17:09:53.247' ,/* status */ N'active' ,/* avatar */ null  );
+values ( /* user_id */ 15 ,/* full_name */ N'Nguyen Do Phuc Toan' ,/* phone */ N'0123456789' ,/* address */ N'123 Đường ABC, Quận 1, TP.HCM' ,/* date_of_birth */ '1985-06-15' ,/* gender */ N'male' ,/* specialty */ N'Chuyên khoa răng miệng ' ,/* license_number */ N'BACSITOAN001' ,/* created_at */ '2025-05-24 03:25:49.890' ,/* status */ N'active' ,/* avatar */ null  ), 
+( /* user_id */ 16 ,/* full_name */ N'BS. Nguyễn Văn An' ,/* phone */ N'0901234567' ,/* address */ N'123 Đường Nguyễn Trãi, Q1, HCM' ,/* date_of_birth */ '1980-01-15' ,/* gender */ N'male' ,/* specialty */ N'Nha khoa tổng quát' ,/* license_number */ N'NK001' ,/* created_at */ '2025-06-10 17:09:53.247' ,/* status */ N'active' ,/* avatar */ null  ), 
+( /* user_id */ 17 ,/* full_name */ N'BS. Trần Thị Bích' ,/* phone */ N'0912345678' ,/* address */ N'456 Đường Lê Văn Sỹ, Q3, HCM' ,/* date_of_birth */ '1985-05-20' ,/* gender */ N'female' ,/* specialty */ N'Chỉnh nha - Niềng răng' ,/* license_number */ N'NK002' ,/* created_at */ '2025-06-10 17:09:53.247' ,/* status */ N'active' ,/* avatar */ null  ), 
+( /* user_id */ 21   ,/* full_name */ N'BS. Lê Minh Cường' ,/* phone */ N'0923456789' ,/* address */ N'789 Đường Võ Văn Tần, Q3, HCM' ,/* date_of_birth */ '1978-12-10' ,/* gender */ N'male' ,/* specialty */ N'Phẫu thuật hàm mặt' ,/* license_number */ N'NK003' ,/* created_at */ '2025-06-10 17:09:53.247' ,/* status */ N'active' ,/* avatar */ null  );
 
 
 CREATE TABLE [dbo].[Staff] (
@@ -148,6 +151,7 @@ CREATE TABLE [dbo].[TimeSlot] (
     [slot_id]    INT      IDENTITY (1, 1) NOT NULL,
     [start_time] TIME (7) NULL,
     [end_time]   TIME (7) NULL,
+    UNIQUE (start_time, end_time),
     PRIMARY KEY CLUSTERED ([slot_id] ASC),
     CONSTRAINT CHK_TimeSlot_Duration CHECK ([end_time] > [start_time])
 );
@@ -180,16 +184,17 @@ CREATE TABLE [dbo].[Services] (
     [service_id]   INT             IDENTITY (1, 1) NOT NULL,
     [service_name] NVARCHAR (255)  NOT NULL,
     [description]  NVARCHAR (1000) NULL,
-    [price]        MONEY           NOT NULL,
+    [price]        DECIMAL(18,2)           NOT NULL,
     [status]       NVARCHAR (50)   DEFAULT ('active') NOT NULL,
     [category]     NVARCHAR (100)  NOT NULL,
-    [created_at]   DATETIME2 (7)   DEFAULT (getdate()) NULL,
+    [created_at]   DATETIME2 (7)   DEFAULT (getdate()) NOT NULL,
     [updated_at]   DATETIME2 (7)   DEFAULT (getdate()) NULL,
     [created_by]   NVARCHAR (100)  NULL,
     [image]        NVARCHAR (500)  NULL,
     PRIMARY KEY CLUSTERED ([service_id] ASC),
     CHECK ([price]>=(0)),
-    CHECK ([status]='discontinued' OR [status]='inactive' OR [status]='active')
+    CHECK ([status]='discontinued' OR [status]='inactive' OR [status]='active'),
+    CONSTRAINT UQ_Service_Name UNIQUE(service_name)
 );
 
 
@@ -235,11 +240,11 @@ values ( /* service_name */ N'Khám tổng quát răng miệng' ,/* description 
 
 CREATE TABLE [dbo].[Appointment] (
     [appointment_id]          INT            IDENTITY (1, 1) NOT NULL,
-    [patient_id]              INT            NULL,
-    [doctor_id]               BIGINT         NULL,
-    [work_date]               DATE           NULL,
-    [slot_id]                 INT            NULL,
-    [status]                  NVARCHAR (50)  DEFAULT (N'BOOKED') NULL
+    [patient_id]              INT            NOT NULL,
+    [doctor_id]               INT         NOT NULL,
+    [work_date]               DATE           NOT NULL,
+    [slot_id]                 INT            NOT NULL,
+    [status]                  NVARCHAR (50)  DEFAULT (N'BOOKED') NOT NULL
         CHECK ([status] IN (
             'BOOKED',         -- Đã đặt lịch (thay thế cho "Đã đặt", "CONFIRMED")
             'COMPLETED',      -- Hoàn thành
@@ -247,8 +252,7 @@ CREATE TABLE [dbo].[Appointment] (
             'WAITING_PAYMENT' -- Chờ thanh toán
         )),
     [reason]                  NVARCHAR (MAX) NULL,
-    [doctor_name]             NVARCHAR (50)  NULL,
-    [previous_appointment_id] INT            NULL, --  khác 0 ->  tái khám ||  0 -> k  tái khám  || mỗi lần tái khám là tăng lên 1 
+    [previous_appointment_id] INT            NULL, -- NULL: không tái khám. khác NULL: là appointment gốc  || mỗi lần tái khám là tăng lên 1 
     [booked_by_user_id]       INT            NULL, -- Book lịch khám bởi  người thân (user_id )
     [relative_id]             INT            NULL,
     PRIMARY KEY CLUSTERED ([appointment_id] ASC),
@@ -256,6 +260,7 @@ CREATE TABLE [dbo].[Appointment] (
     FOREIGN KEY ([patient_id]) REFERENCES [dbo].[Patients] ([patient_id]),
     FOREIGN KEY ([previous_appointment_id]) REFERENCES [dbo].[Appointment] ([appointment_id]),
     FOREIGN KEY ([slot_id]) REFERENCES [dbo].[TimeSlot] ([slot_id]),
+    CONSTRAINT UQ_Doctor_WorkDate_Slot UNIQUE ([doctor_id], [work_date], [slot_id])
     -- FK to Relatives added later (Relatives created at end of script)
 );
 
@@ -263,24 +268,25 @@ CREATE TABLE [dbo].[Appointment] (
 CREATE TABLE [dbo].[MedicalReport] (
     [report_id]      INT             IDENTITY (1, 1) NOT NULL,
     [appointment_id] INT             NOT NULL,
-    [doctor_id]      BIGINT          NOT NULL,
+    [doctor_id]      INT          NOT NULL,
     [patient_id]     INT             NOT NULL,
     [diagnosis]      NVARCHAR (500)  NULL,
     [treatment_plan] NVARCHAR (1000) NULL,
     [note]           NVARCHAR (1000) NULL,
-    [created_at]     DATETIME        DEFAULT (getdate()) NULL,
+    [created_at]     DATETIME        DEFAULT (getdate()) NOT NULL,
     [sign]           NVARCHAR (MAX)  NULL,
-    [is_reexam_lan_2] BIT            DEFAULT ((0)) NULL,
+    [is_reexam_lan_2] BIT            DEFAULT ((0)) NOT NULL,
     PRIMARY KEY CLUSTERED ([report_id] ASC),
-    FOREIGN KEY ([doctor_id]) REFERENCES [dbo].[Doctors] ([doctor_id]),
     FOREIGN KEY ([patient_id]) REFERENCES [dbo].[Patients] ([patient_id]),
-    CONSTRAINT [FK_MedicalReport_Doctor] FOREIGN KEY ([doctor_id]) REFERENCES [dbo].[Doctors] ([doctor_id])
+    CONSTRAINT [FK_MedicalReport_Doctor] 
+    FOREIGN KEY ([doctor_id]) REFERENCES [dbo].[Doctors] ([doctor_id]),
+    CONSTRAINT FK_MedicalReport_Appointment
+    FOREIGN KEY (appointment_id) REFERENCES dbo.Appointment(appointment_id),     
+    UNIQUE ([appointment_id])                                                                     
 );
 
 
 GO
-ALTER TABLE [dbo].[MedicalReport] NOCHECK CONSTRAINT [FK_MedicalReport_Doctor];
-
 
 
 
@@ -290,7 +296,8 @@ CREATE TABLE [dbo].[Medicine] (
     [unit]              NVARCHAR (50)   NULL,
     [quantity_in_stock] INT             NOT NULL,
     [description]       NVARCHAR (1000) NULL,
-    PRIMARY KEY CLUSTERED ([medicine_id] ASC)
+    PRIMARY KEY CLUSTERED ([medicine_id] ASC),
+    CHECK ([quantity_in_stock] >= 0)
 );
 
 insert into medicine ( [name] , [unit] , [quantity_in_stock] , [description] ) 
@@ -309,7 +316,8 @@ CREATE TABLE [dbo].[Prescription] (
     [usage]           NVARCHAR (500) NULL,
     PRIMARY KEY CLUSTERED ([prescription_id] ASC),
     FOREIGN KEY ([medicine_id]) REFERENCES [dbo].[Medicine] ([medicine_id]),
-    FOREIGN KEY ([report_id]) REFERENCES [dbo].[MedicalReport] ([report_id])
+    FOREIGN KEY ([report_id]) REFERENCES [dbo].[MedicalReport] ([report_id]),
+    CHECK ([quantity] > 0)
 );
 
 CREATE TABLE [dbo].[Bills] (
@@ -318,16 +326,16 @@ CREATE TABLE [dbo].[Bills] (
     [service_id]               INT             NOT NULL,
     [patient_id]               INT             NULL,
     [user_id]                  INT             NULL,
-    [amount]                   MONEY           NOT NULL,
-    [original_price]           MONEY           NOT NULL,
-    [discount_amount]          MONEY           DEFAULT ((0)) NULL,
-    [tax_amount]               MONEY           DEFAULT ((0)) NULL,
+    [amount]                   DECIMAL(18,2)           NOT NULL,
+    [original_price]           DECIMAL(18,2)           NOT NULL,
+    [discount_amount]          DECIMAL(18,2)           DEFAULT ((0)) NULL,
+    [tax_amount]               DECIMAL(18,2)           DEFAULT ((0)) NULL,
     [payment_method]           NVARCHAR (50)   DEFAULT ('PayOS') NOT NULL,
     [payment_status]           NVARCHAR (50)   DEFAULT ('pending') NOT NULL,
     [customer_name]            NVARCHAR (255)  NOT NULL,
     [customer_phone]           NVARCHAR (20)   NULL,
     [customer_email]           NVARCHAR (255)  NULL,
-    [doctor_id]                INT             NULL,
+    [doctor_id]                INT             NOT NULL,
     [appointment_id]            INT             NULL,
     [appointment_date]         DATE            NULL,
     [appointment_time]         TIME (7)        NULL,
@@ -343,12 +351,17 @@ CREATE TABLE [dbo].[Bills] (
     [refunded_at]              DATETIME2 (7)   NULL,
     [notes]                    NVARCHAR (1000) NULL,
     [internal_notes]           NVARCHAR (1000) NULL,
-    [is_deleted]               BIT             DEFAULT ((0)) NULL,
+    [is_deleted]               BIT             DEFAULT ((0)) NOT NULL,
     PRIMARY KEY CLUSTERED ([bill_id] ASC),
     CHECK ([amount]>(0)),
     CHECK ([discount_amount]>=(0)),
     CHECK ([original_price]>(0)),
     CHECK ([tax_amount]>=(0)),
+    CHECK ([payment_status] IN ('pending','paid','failed','cancelled','refunded')),
+	CHECK (amount = original_price - ISNULL(discount_amount,0) + ISNULL(tax_amount,0)),
+	CONSTRAINT [FK_Bills_Patient] FOREIGN KEY (patient_id) REFERENCES dbo.Patients(patient_id),
+    CONSTRAINT [FK_Bills_User] FOREIGN KEY (user_id) REFERENCES dbo.users(user_id),            
+    CONSTRAINT [FK_Bills_Doctor] FOREIGN KEY (doctor_id) REFERENCES dbo.Doctors(doctor_id),
     CONSTRAINT [FK_Bills_Services] FOREIGN KEY ([service_id]) REFERENCES [dbo].[Services] ([service_id]),
     CONSTRAINT [FK_Bills_Appointment] FOREIGN KEY ([appointment_id]) REFERENCES [dbo].[Appointment] ([appointment_id]),
     UNIQUE NONCLUSTERED ([order_id] ASC)
@@ -376,9 +389,15 @@ ON dbo.Bills
 AFTER UPDATE
 AS
 BEGIN
-    UPDATE dbo.Bills 
-    SET updated_at = GETDATE()
-    WHERE bill_id IN (SELECT bill_id FROM inserted);
+    SET NOCOUNT ON;
+
+    IF UPDATE(updated_at)
+        RETURN;
+
+    UPDATE b
+    SET updated_at = SYSDATETIME()
+    FROM dbo.Bills b
+    INNER JOIN inserted i ON b.bill_id = i.bill_id;
 END;
 GO
 CREATE NONCLUSTERED INDEX [IX_Bills_PatientId]
@@ -403,31 +422,36 @@ CREATE NONCLUSTERED INDEX [IX_Bills_Amount]
 CREATE TABLE [dbo].[PaymentInstallments] (
     [installment_id]     INT             IDENTITY (1, 1) NOT NULL,
     [bill_id]            NVARCHAR (50)   NOT NULL,
-    [total_amount]       MONEY           NOT NULL,
-    [down_payment]       MONEY           NOT NULL,
+    [total_amount]       DECIMAL(18,2)           NOT NULL,
+    [down_payment]       DECIMAL(18,2)           NOT NULL,
     [installment_count]  INT             NOT NULL,
     [interest_rate]      DECIMAL (5, 2)  DEFAULT ((0)) NULL,
     [installment_number] INT             NOT NULL,
     [due_date]           DATE            NOT NULL,
-    [amount_due]         MONEY           NOT NULL,
-    [amount_paid]        MONEY           DEFAULT ((0)) NULL,
-    [remaining_amount]   MONEY           DEFAULT ((0)) NULL,
+    [amount_due]         DECIMAL(18,2)           NOT NULL,
+    [amount_paid]        DECIMAL(18,2)           DEFAULT ((0)) NULL,
+    [remaining_amount]   DECIMAL(18,2)           DEFAULT ((0)) NULL,
     [payment_date]       DATE            NULL,
-    [status]             NVARCHAR (20)   DEFAULT ('PENDING') NULL,
+    [status]             NVARCHAR (20)   DEFAULT ('PENDING') NOT NULL,
     [payment_method]     NVARCHAR (50)   NULL,
     [transaction_id]     NVARCHAR (100)  NULL,
-    [late_fee]           MONEY           DEFAULT ((0)) NULL,
+    [late_fee]           DECIMAL(18,2)           DEFAULT ((0)) NULL,
     [last_reminder_date] DATE            NULL,
     [reminder_count]     INT             DEFAULT ((0)) NULL,
     [next_reminder_date] DATE            NULL,
-    [created_at]         DATETIME2 (7)   DEFAULT (getdate()) NULL,
+    [created_at]         DATETIME2 (7)   DEFAULT (getdate()) NOT NULL,
     [updated_at]         DATETIME2 (7)   DEFAULT (getdate()) NULL,
     [notes]              NVARCHAR (1000) NULL,
     PRIMARY KEY CLUSTERED ([installment_id] ASC),
     CHECK ([amount_paid]<=[amount_due]),
-    CHECK ([down_payment]>=[total_amount]*(0.3)),
-    CHECK ([installment_count]>=(3) AND [installment_count]<=(12)),
+    CHECK (
+        (installment_count = 1)
+        OR
+        (installment_count BETWEEN 3 AND 12)
+    ),
+    CHECK (down_payment <= total_amount),
     CHECK ([installment_number]<=[installment_count]),
+    CONSTRAINT CHK_PaymentInstallments_Status CHECK ([status] IN ('PENDING','PAID','OVERDUE','CANCELLED')),
     CONSTRAINT [FK_PaymentInstallments_Bills] FOREIGN KEY ([bill_id]) REFERENCES [dbo].[Bills] ([bill_id])
 );
 
@@ -438,10 +462,13 @@ CREATE TABLE [dbo].[Reexamination] (
     [reexam_type]       NVARCHAR(20)   NOT NULL,     -- 'REQUEST' | 'SCHEDULED'
     [note]              NVARCHAR(500)  NULL,         -- Ghi chú lý do tái khám
     [status]            NVARCHAR(20)   DEFAULT('PENDING') NOT NULL, -- 'PENDING' | 'COMPLETED' | 'CANCELLED'
-    [created_at]        DATETIME       DEFAULT(GETDATE()) NOT NULL,
+    [created_at]        DATETIME2(3) DEFAULT SYSDATETIME() NOT NULL,
     [created_by]        INT         NOT NULL,     -- Doctor tạo yêu cầu
     [completed_at]      DATETIME       NULL,         -- Ngày hoàn thành
     
+    CHECK ([reexam_type] IN ('REQUEST','SCHEDULED')),
+    CHECK ([status] IN ('PENDING','COMPLETED','CANCELLED')),
+
     FOREIGN KEY ([appointment_id]) REFERENCES [dbo].[Appointment]([appointment_id]),
     FOREIGN KEY ([created_by]) REFERENCES [dbo].[Doctors]([doctor_id]),
     
@@ -454,18 +481,21 @@ CREATE TABLE [dbo].[Reexamination] (
 
 CREATE TABLE [dbo].[DoctorSchedule] (
     [schedule_id] INT           IDENTITY (1, 1) NOT NULL,
-    [doctor_id]   BIGINT        NULL,
-    [work_date]   DATE          NULL,
-    [slot_id]     INT           NULL,
-    [status]      NVARCHAR (50) NULL,
+    [doctor_id]   INT        NOT NULL,
+    [work_date]   DATE          NOT NULL,
+    [slot_id]     INT           NOT NULL,
+    [status] NVARCHAR(20) DEFAULT 'AVAILABLE' NOT NULL,
+    CONSTRAINT CHK_DoctorSchedule_Status 
+    CHECK ([status] IN ('AVAILABLE','BOOKED','UNAVAILABLE')),
     PRIMARY KEY CLUSTERED ([schedule_id] ASC),
     FOREIGN KEY ([doctor_id]) REFERENCES [dbo].[Doctors] ([doctor_id]),
-    FOREIGN KEY ([slot_id]) REFERENCES [dbo].[TimeSlot] ([slot_id])
+    FOREIGN KEY ([slot_id]) REFERENCES [dbo].[TimeSlot] ([slot_id]),
+    UNIQUE ([doctor_id], [work_date], [slot_id])
 );
 
 
 CREATE TABLE [dbo].[StaffSchedule] (
-    [schedule_id] BIGINT IDENTITY(1,1) PRIMARY KEY,
+    [schedule_id] INT IDENTITY(1,1) PRIMARY KEY,
     [staff_id] INT NOT NULL,
     [work_date] DATE NOT NULL,
     [slot_id] INT NULL, -- NULL nếu là nghỉ phép
@@ -476,9 +506,12 @@ CREATE TABLE [dbo].[StaffSchedule] (
     CONSTRAINT [FK_StaffSchedule_Staff] FOREIGN KEY ([staff_id]) REFERENCES [dbo].[Staff] ([staff_id]),
     CONSTRAINT [FK_StaffSchedule_TimeSlot] FOREIGN KEY ([slot_id]) REFERENCES [dbo].[TimeSlot] ([slot_id]),
     CONSTRAINT [FK_StaffSchedule_Approver] FOREIGN KEY ([approved_by]) REFERENCES [dbo].[Staff] ([staff_id]),
-    CONSTRAINT [CHK_StaffSchedule_Status] CHECK ([status] IN ('pending', 'approved', 'rejected')),
-    CONSTRAINT [UQ_StaffSchedule_Date_Slot] UNIQUE ([staff_id], [work_date], [slot_id])
+    CONSTRAINT [CHK_StaffSchedule_Status] CHECK ([status] IN ('pending', 'approved', 'rejected'))
 );
+
+CREATE UNIQUE INDEX UQ_StaffSchedule_Date_Slot
+ON dbo.StaffSchedule(staff_id, work_date, slot_id)
+WHERE slot_id IS NOT NULL;
 
 CREATE NONCLUSTERED INDEX [IX_StaffSchedule_Status]
     ON [dbo].[StaffSchedule]([status] ASC);
@@ -494,11 +527,12 @@ CREATE TABLE [dbo].[Notifications] (
     [content]         NVARCHAR (MAX) NOT NULL,
     [type]            NVARCHAR (50)  NOT NULL,
     [reference_id]    INT            NULL,
-    [is_read]         BIT            DEFAULT ((0)) NULL,
-    [created_at]      DATETIME       DEFAULT (getdate()) NULL,
+    [is_read]         BIT            DEFAULT ((0)) NOT NULL,
+    [created_at]      DATETIME2(3) DEFAULT SYSDATETIME() NOT NULL,
     [read_at]         DATETIME       NULL,
-    [status]          NVARCHAR (20)  DEFAULT (N'ACTIVE') NULL,
-    PRIMARY KEY CLUSTERED ([notification_id] ASC),
+	[status] NVARCHAR (20) DEFAULT (N'ACTIVE') NOT NULL,
+	CONSTRAINT CHK_Notifications_Status CHECK ([status] IN ('ACTIVE','DELETED')),
+	PRIMARY KEY CLUSTERED ([notification_id] ASC),
     FOREIGN KEY ([user_id]) REFERENCES [dbo].[users] ([user_id])
 );
 
@@ -516,7 +550,7 @@ CREATE TABLE [dbo].[ChatMessages] (
     [user_id]         INT            NOT NULL,
     [message_content] NVARCHAR (MAX) NOT NULL,
     [receiver_id]     INT            NULL,
-    [timestamp]       DATETIME       DEFAULT (getdate()) NULL,
+    [timestamp]       DATETIME2(3) DEFAULT SYSDATETIME() NULL,
     PRIMARY KEY CLUSTERED ([message_id] ASC),
     FOREIGN KEY ([receiver_id]) REFERENCES [dbo].[users] ([user_id]),
     FOREIGN KEY ([user_id]) REFERENCES [dbo].[users] ([user_id])
@@ -529,7 +563,7 @@ CREATE TABLE [dbo].[Blog] (
     [title]      NVARCHAR (255) NULL,
     [content]    NVARCHAR(MAX)  NULL,
     [image_url]  NVARCHAR (MAX) NULL,
-    [created_at] DATETIME       DEFAULT (getdate()) NULL,
+    [created_at] DATETIME2(3) DEFAULT SYSDATETIME() NULL,
     PRIMARY KEY CLUSTERED ([blog_id] ASC)
 );
 
@@ -557,7 +591,7 @@ values
 ( /* title */ N'Tầm Quan Trọng Của Chụp X-Quang Răng Trong Chẩn Đoán' ,/* content */ N'Chụp X-quang răng là công cụ chẩn đoán quan trọng giúp nha sĩ phát hiện các bệnh lý không thể nhìn thấy bằng mắt thường. X-quang cho thấy tình trạng răng, chân răng, xương hàm và phát hiện sâu răng ẩn, áp xe, u nang. Có các loại X-quang như phim cắn, phim quanh chóp và phim toàn cảnh phù hợp với từng mục đích chẩn đoán. Công nghệ X-quang số hiện đại giảm thiểu tia xạ và cho hình ảnh rõ nét hơn.' ,/* image_url */ N'/images/dental-xray.jpg' ,/* created_at */ '2025-01-02 19:00:00.000'  );
 
 
-
+GO
 
 -- 7. Tạo trigger tự động cập nhật updated_at
 CREATE TRIGGER TR_Staff_UpdatedAt
@@ -580,6 +614,8 @@ CREATE NONCLUSTERED INDEX [IX_Staff_Position]
 GO
 CREATE NONCLUSTERED INDEX [IX_Staff_EmploymentType]
     ON [dbo].[Staff]([employment_type] ASC);
+
+GO
 
 CREATE TRIGGER [TR_StaffSchedule_ApprovedAt]
 ON [dbo].[StaffSchedule]
@@ -614,7 +650,7 @@ CREATE TABLE [dbo].[UserFaceImages] (
     face_image NVARCHAR(MAX) NOT NULL, -- Base64 của ảnh khuôn mặt
     face_encoding NVARCHAR(MAX) NOT NULL, -- Vector đặc trưng khuôn mặt từ Google Vision
     confidence_score FLOAT DEFAULT(0), -- Điểm tin cậy khi đăng ký
-    registered_at DATETIME DEFAULT (getdate()),
+    registered_at DATETIME2(3) DEFAULT SYSDATETIME(),
     is_active BIT DEFAULT(1), -- Cho phép vô hiệu hóa ảnh cũ
     FOREIGN KEY (user_id) REFERENCES [dbo].[users](user_id)
 );
@@ -635,7 +671,7 @@ CREATE TABLE [dbo].[Relatives] (
     [date_of_birth]  DATE           NULL,
     [gender]         NVARCHAR (10)  NULL,
     [relationship]   NVARCHAR (50)  NULL, -- Quan hệ: Cha, Mẹ, Con, Vợ/Chồng, ...
-    [created_at]     DATETIME       DEFAULT (getdate()) NULL,
+    [created_at]     DATETIME2(3) DEFAULT SYSDATETIME() NULL,
     PRIMARY KEY CLUSTERED ([relative_id] ASC),
     FOREIGN KEY ([user_id]) REFERENCES [dbo].[users] ([user_id])
 );
